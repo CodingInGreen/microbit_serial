@@ -2,10 +2,8 @@
 #![no_std]
 
 use cortex_m_rt::entry;
-//use core::mem::discriminant;
 use rtt_target::{rprintln, rtt_init_print};
 use panic_rtt_target as _;
-//use panic_halt as _;
 use microbit::{
     hal::pac,
     hal::gpio::{p0::Parts as P0Parts, Level},
@@ -22,12 +20,12 @@ fn main() -> ! {
     // Initialize UART
     let uart0 = &peripherals.UART0;
 
+    // Initialize GPIO pins
     let gpio = P0Parts::new(peripherals.P0);
 
     // Configure GPIO pins
     let _tx_pin = gpio.p0_24.into_push_pull_output(Level::Low);
     let _rx_pin = gpio.p0_25.into_floating_input();
-
 
     // Configure UART
     uart0.psel.txd.write(|w| unsafe { w.bits(24) }); // TXD pin
